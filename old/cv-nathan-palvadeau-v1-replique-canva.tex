@@ -1,0 +1,325 @@
+%==============================================================================
+%  CV — Nathan Palvadeau
+%  Réplique LaTeX du CV Canva "Security Monitoring Analyst — 2026"
+%
+%  Moteur   : XeLaTeX (obligatoire : fontspec + polices TTF locales)
+%  Overleaf : Menu > Paramètres > Compilateur = XeLaTeX
+%             et uploader le dossier fonts/ à la racine du projet
+%  Local    : xelatex -output-directory=build cv-nathan-palvadeau.tex
+%==============================================================================
+\documentclass[9pt,a4paper]{extarticle}
+
+%--- Géométrie (relevée au point près sur le PDF Canva d'origine) -------------
+\usepackage[a4paper,
+            left=25.5pt, right=14.3pt,
+            top=25pt,    bottom=14pt,
+            nohead, nofoot]{geometry}
+
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{changepage}
+\usepackage{calc}
+\usepackage[hidelinks]{hyperref}
+
+%==============================================================================
+%  COULEURS
+%==============================================================================
+\definecolor{paper}{HTML}{FAFAFA}   % fond de page du Canva
+\definecolor{ink}{HTML}{000000}     % texte
+\pagecolor{paper}
+\color{ink}
+
+%==============================================================================
+%  POLICES
+%  Corps  : DM Sans       (Google Fonts, OFL) — police d'origine du Canva
+%  Titres : Space Grotesk (Google Fonts, OFL) — substitut libre de
+%           PP Neue Machina (commerciale) utilisée par le Canva.
+%           Si tu possèdes PP Neue Machina : dépose les .ttf dans fonts/
+%           et remplace SpaceGrotesk ci-dessous par PPNeueMachina.
+%==============================================================================
+\setmainfont{DMSans}[
+  Path            = ./fonts/,
+  Extension       = .ttf,
+  UprightFont     = *-Regular,
+  BoldFont        = *-Bold,
+  ItalicFont      = *-Italic,
+  BoldItalicFont  = *-BoldItalic,
+  Ligatures       = TeX,
+]
+\newfontfamily\displayfont{SpaceGrotesk}[
+  Path        = ./fonts/,
+  Extension   = .ttf,
+  UprightFont = *-Medium,
+  BoldFont    = *-Bold,
+  Ligatures   = TeX,
+]
+
+%==============================================================================
+%  COMPOSITION : ferré à gauche, sans césure (comme le Canva)
+%==============================================================================
+\raggedright
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\tolerance=9999
+\emergencystretch=0pt
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{empty}
+
+%==============================================================================
+%  GRILLE
+%==============================================================================
+\newlength{\labelcol}\setlength{\labelcol}{125.1pt}  % gouttière d'intitulés
+\newlength{\colgap}  \setlength{\colgap}{222.2pt}    % pas de la grille 2 col.
+\newlength{\cellw}   \setlength{\cellw}{208.2pt}     % largeur d'une cellule
+\newcommand{\ruleweight}{0.75pt}
+
+%--- Écarts verticaux (tout le rythme vertical se règle ici) ------------------
+\newlength{\gNameContact}  \setlength{\gNameContact}  {7.9pt}
+\newlength{\gContactRule}  \setlength{\gContactRule}  {4pt}
+\newlength{\gRuleSection}  \setlength{\gRuleSection}  {1.9pt}
+\newlength{\gTitleOrg}     \setlength{\gTitleOrg}     {2.0pt}
+\newlength{\gOrgStack}     \setlength{\gOrgStack}     {2.5pt}
+\newlength{\gStackItems}   \setlength{\gStackItems}   {6pt}
+\newlength{\gJobJob}       \setlength{\gJobJob}       {10pt}
+\newlength{\gItemsRule}    \setlength{\gItemsRule}    {2.9pt}
+\newlength{\gSchoolDegree} \setlength{\gSchoolDegree} {3.6pt}
+\newlength{\gDegreeItems}  \setlength{\gDegreeItems}  {4.0pt}
+\newlength{\gGridRow}      \setlength{\gGridRow}      {2pt}
+\newlength{\gCellTitleSub} \setlength{\gCellTitleSub} {3.5pt}
+\newlength{\gSchoolSchool} \setlength{\gSchoolSchool}{7pt}
+\newlength{\gGridRule}    \setlength{\gGridRule}    {8.8pt}
+
+%==============================================================================
+%  PRIMITIVES
+%==============================================================================
+% Corps de texte dimensionné : \sz{taille}{interligne}
+\newcommand{\sz}[2]{\fontsize{#1}{#2}\selectfont}
+
+% Intitulé de section, posé dans la gouttière de gauche.
+% La boîte ne doit contribuer ni hauteur ni profondeur, sinon elle écarte la
+% ligne suivante : on l'aplatit avec \raisebox (\smash n'accepte pas de \par).
+\newcommand{\flatbox}[1]{\raisebox{0pt}[0pt][0pt]{#1}}
+\newcommand{\sidelabel}[1]{%
+  \leavevmode
+  \llap{\flatbox{\parbox[t]{\labelcol}{\raggedright\bfseries\sz{10}{13.5}#1}}}%
+  \ignorespaces
+}
+
+% Filet horizontal, pleine largeur de la colonne contenu
+\newcommand{\cvrule}{%
+  \par\noindent\textcolor{ink}{\rule{\linewidth}{\ruleweight}}\par%
+}
+
+% Puce de largeur nulle : le texte reste aligné sur \leftmargin
+\newcommand{\bul}{\makebox[0pt][l]{\sz{10}{10}\textbullet}}
+
+% Flèche de la ligne « Tech Stack »
+\newcommand{\arrow}{→}
+
+\newcommand{\techstack}[1]{%
+  {\sz{8}{11}Tech Stack\ \arrow\ \textbf{#1}\par}%
+}
+
+% En-tête d'expérience : poste / organisation / stack technique
+\newcommand{\job}[3]{%
+  {\sz{10}{13.5}\bfseries\leavevmode #1\par}%
+  \vspace{\gTitleOrg}%
+  {\sz{8.9}{12}#2\par}%
+  \vspace{\gOrgStack}%
+  \techstack{#3}%
+}
+
+% Puces d'expérience : texte à +9.5pt, puce à -2.1pt de la colonne
+\newenvironment{cvitems}{%
+  \vspace{\gStackItems}%
+  \begin{itemize}[leftmargin=9.5pt, labelsep=11.6pt, labelwidth=0pt,
+                  align=left, itemsep=0pt, topsep=0pt, parsep=0pt,
+                  partopsep=0pt, label=\bul]%
+  \sz{9}{12.5}%
+}{\end{itemize}}
+
+% Puces de formation : texte à +16pt, puce à +4.5pt
+\newenvironment{cvsubitems}{%
+  \vspace{\gDegreeItems}%
+  \begin{itemize}[leftmargin=16pt, labelsep=11.5pt, labelwidth=0pt,
+                  align=left, itemsep=0pt, topsep=0pt, parsep=0pt,
+                  partopsep=0pt, label=\bul]%
+  \sz{9}{12.5}%
+}{\end{itemize}}
+
+% Cellule de la grille « Projets » / « Langues »
+\newcommand{\gridcell}[2]{%
+  \parbox[t]{\cellw}{%
+    \sz{9.05}{12}\raggedright
+    \textbf{#1}\par\vspace{\gCellTitleSub}#2\par}%
+}
+% Rangée de deux cellules
+\newcommand{\gridrow}[4]{%
+  \gridcell{#1}{#2}\hspace*{14pt}\gridcell{#3}{#4}%
+}
+
+\begin{document}
+
+%==============================================================================
+%  EN-TÊTE
+%==============================================================================
+\vspace*{-4pt}
+
+\begin{adjustwidth}{0pt}{11.7pt}
+
+% Nom (gauche) + intitulé de poste (droite), lignes de base alignées
+\noindent
+{\displayfont\bfseries\sz{23}{23}Nathan PALVADEAU}%
+\hfill
+{\displayfont\sz{14}{14}\addfontfeature{LetterSpace=4.0}Security Monitoring Analyst}%
+\par
+
+\vspace{\gNameContact}
+
+% Coordonnées (gauche) + disponibilité (droite)
+\noindent
+\parbox[t]{295pt}{%
+  \sz{9}{12}\raggedright
+  \textbf{nathan.palvadeau.pro@proton.me} \textbullet{}
+  \href{https://linkedin.com/in/nathan-plvd}{\underline{linkedin.com/in/nathan-plvd}}\par
+  \textbf{+33 7 82 81 73 64} \textbullet{} Versailles (78) \textbullet{} Permis B\par
+}%
+\hfill
+\parbox[t]{235pt}{%
+  \sz{8.75}{11.7}\raggedleft
+  \textbf{Recherche alternance sur 2 ans}\par
+  4 semaines entreprise / 2 semaines école\par
+}
+
+\end{adjustwidth}
+
+%==============================================================================
+%  CORPS — gouttière d'intitulés + colonne de contenu
+%==============================================================================
+\begin{adjustwidth}{\labelcol}{0pt}
+
+\vspace{\gContactRule}
+\cvrule
+\vspace{\gRuleSection}
+
+%------------------------------------------------------------------------------
+%  PROFIL
+%------------------------------------------------------------------------------
+\sidelabel{PROFIL}%
+{\sz{9}{13.0}\leavevmode Analyste SOC N2 en alternance sur un périmètre européen
+anglophone de +120k endpoints. Parcours infrastructure (bachelor systèmes et
+réseaux) puis cybersécurité. Investigation, ingénierie de détection et
+automatisation SOC, nourries par une pratique offensive continue (CRTP,
+plateformes CTF).\par}
+
+\vspace{\gItemsRule}
+\cvrule
+\vspace{\gRuleSection}
+
+%------------------------------------------------------------------------------
+%  EXPÉRIENCES PROFESSIONNELLES
+%------------------------------------------------------------------------------
+\sidelabel{EXPÉRIENCES PROFESSIONNELLES}%
+\job{Analyste SOC N2 \textbullet{} Scope Européen (anglophone) \textbullet{} +120k endpoints}
+    {Cyna (Paris, FR) | 7 analystes | \textit{Depuis août 2025}}
+    {Elastic, Microsoft Defender, SentinelOne, TheHive \& Cortex, n8n, Zendesk, Python, Claude Code}
+
+\begin{cvitems}
+  \item \textbf{Analyse et qualification} des incidents de sécurité : phishing O365,
+        compromission de postes, mouvements latéraux, Active Directory, attaques par
+        force brute, infections malware et enrichissement contextuel pour appuyer les
+        investigations.
+  \item Réalisation d'\textbf{investigations approfondies}, mise en œuvre des actions
+        de confinement et coordination technique avec les clients et les éditeurs de
+        solutions de sécurité.
+  \item Amélioration des \textbf{capacités de détection} : création de règles de
+        détection avancées, automatisation de playbooks et activités de threat hunting.
+  \item Contribution au développement des capacités SOC : formation, documentation,
+        standardisation de procédures et pilotage de projet interne.
+  \item Collaboration avec l'équipe \textbf{R\&D} : prototypage, tests et déploiement
+        d'améliorations liées à l'\textbf{automatisation SOC} et à la détection
+        (intégration IA, \textbf{CTI}, règles firewall, corrélation de logs).
+\end{cvitems}
+
+\vspace{\gJobJob}
+
+\job{Cyber Forensic \textbullet{} Entreprise internationale \textbullet{} +10k utilisateurs}
+    {ADP (Nanterre, FR) | 4 analystes | \textit{Août 2024}}
+    {CrowdStrike, Microsoft Defender, E-Discovery, Volatility, Autopsy, Python, PowerShell, OpenAI}
+
+\begin{cvitems}
+  \item \textbf{Forensic} et \textbf{réponse à incident} : analyses approfondies de
+        malwares et investigation d'artefacts afin de reconstituer des scénarios
+        d'attaque complexes.
+  \item Opérations DFIR et workflows d'investigation : utilisation d'outils spécialisés
+        pour la collecte, la préservation et l'\textbf{analyse d'artefacts}, avec
+        automatisation des étapes récurrentes.
+  \item Environnement de recherche dédié : conception d'un laboratoire d'investigation
+        \textbf{OSINT} (détails omis pour des raisons de confidentialité) et rédaction
+        de la documentation associée.
+  \item Pilotage d'un \textbf{projet à l'international} : déploiement de
+        l'environnement dans le cadre d'une investigation réelle et présentation des
+        conclusions stratégiques à une équipe technique basée aux États-Unis.
+\end{cvitems}
+
+\vspace{\gItemsRule}
+\cvrule
+\vspace{\gRuleSection}
+
+%------------------------------------------------------------------------------
+%  FORMATION
+%------------------------------------------------------------------------------
+\sidelabel{FORMATION}%
+{\sz{10}{13.5}\bfseries\leavevmode Ecole2600\par}
+\vspace{\gSchoolDegree}
+{\sz{9.76}{13}Mastère en cybersécurité (programme en alternance)\par}
+
+\begin{cvsubitems}
+  \item Sécurité applicative \& offensive : sécurité Web, tests d'intrusion et
+        évaluation de vulnérabilités.
+  \item Reverse engineering, exploitation bas niveau (pwn) \& analyse malware
+  \item Sécurité infrastructure \& cloud : réseaux, systèmes, sécurité cloud et
+        pratiques DevSecOps.
+  \item Threat Intelligence \& recherche appliquée : Cyber Threat Intelligence (CTI),
+        gestion de projet et recherches spécialisées.
+  \item Gouvernance, risque et compliance
+  \item Programmation : C, Python \& Rust
+\end{cvsubitems}
+
+\vspace{\gSchoolSchool}
+
+{\sz{10}{13.5}\bfseries\leavevmode Sup de Vinci\par}
+\vspace{\gSchoolDegree}
+{\sz{9.76}{13}Bachelor Administration Systèmes \& Réseaux (2 ans)\par}
+
+\vspace{\gItemsRule}
+\cvrule
+\vspace{\gRuleSection}
+
+%------------------------------------------------------------------------------
+%  PROJETS
+%------------------------------------------------------------------------------
+\sidelabel{PROJETS}%
+\gridrow{Certified Red Team Professional (CRTP)}{Altered Security - En cours (2026)}
+        {CTF Platforms}{Autodidacte | Depuis 2023\\HackTheBox, Root-Me, TryHackMe}
+
+\vspace{\gGridRow}
+
+\noindent
+\gridrow{Blockchain \& Automatisations}{Projet de R\&D sur des thématiques de FinInt, tracking de transactions décentralisées}
+        {SOC \& Home Lab Infrastructure}{Autodidacte | Depuis 2023}
+
+\vspace{\gGridRule}
+\cvrule
+\vspace{\gRuleSection}
+
+%------------------------------------------------------------------------------
+%  LANGUES
+%------------------------------------------------------------------------------
+\sidelabel{LANGUES}%
+\gridrow{Français}{Natif}{Anglais}{Capacité professionnelle complète (B2)}
+
+\end{adjustwidth}
+\end{document}

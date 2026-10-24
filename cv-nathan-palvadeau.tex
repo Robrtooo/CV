@@ -1,0 +1,191 @@
+%==============================================================================
+%  CV — Nathan Palvadeau — v2, format « Adnane Afifi »
+%
+%  Réplique de la mise en page du CV de référence
+%  (Cv_ADNANE_AFIFI_FR_20052026_cyber.pdf), avec le contenu de Nathan.
+%
+%  Moteur : pdfLaTeX (aucune police externe — Nimbus Roman via mathptmx,
+%           exactement la police du CV de référence). XeLaTeX fonctionne aussi.
+%  Overleaf : Settings > Compiler = pdfLaTeX
+%==============================================================================
+\documentclass[10pt,a4paper]{article}
+
+%--- Géométrie relevée sur le PDF de référence : marges 36 pt ----------------
+\usepackage[a4paper, left=36pt, right=36pt, top=18.1pt, bottom=24pt,
+            nohead, nofoot]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{mathptmx}        % Nimbus Roman — la police du CV de référence
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{empty}
+\frenchspacing
+
+% Le CV de référence est justifié avec césure : on garde ce réglage.
+\hyphenpenalty=200
+\tolerance=2000
+
+%--- Écarts verticaux (tout le rythme se règle ici) ---------------------------
+\newlength{\gNameRole}   \setlength{\gNameRole}   {1.9pt}
+\newlength{\gRoleContact}\setlength{\gRoleContact}{2.0pt}
+\newlength{\gBeforeSec}  \setlength{\gBeforeSec}  {4.2pt}  % avant un titre
+\newlength{\gSecRule}    \setlength{\gSecRule}    {1.2pt}  % titre -> filet
+\newlength{\gRuleBody}   \setlength{\gRuleBody}   {1.9pt}  % filet -> contenu
+\newlength{\gEntry}      \setlength{\gEntry}      {2.4pt}  % entre deux postes
+
+%==============================================================================
+%  PRIMITIVES
+%==============================================================================
+% Titre de section : capitales 12 pt gras + filet pleine largeur
+\newcommand{\cvsection}[1]{%
+  \vspace{\gBeforeSec}%
+  {\large\bfseries #1}\par
+  \vspace{\gSecRule}%
+  \hrule
+  \vspace{\gRuleBody}%
+}
+
+% Ligne de compétence : « Intitulé : valeurs »
+\newcommand{\skillline}[2]{\textbf{#1 :} #2\par}
+
+% En-tête d'un poste : intitulé gras à gauche, dates à droite, puis employeur
+\newcommand{\cventry}[3]{%
+  \vspace{\gEntry}%
+  \textbf{#1}\hfill #2\par
+  #3\par
+}
+
+% Puces : puce à +6.5 pt, texte à +14.9 pt de la marge (comme la référence)
+\newenvironment{cvitems}{%
+  \begin{itemize}[leftmargin=14.9pt, labelsep=8.4pt, labelwidth=0pt,
+                  align=left, itemsep=0pt, topsep=0pt, parsep=0pt,
+                  partopsep=0pt, label={\makebox[0pt][l]{\textbullet}}]%
+}{\end{itemize}}
+
+% Entrée compacte sur une ligne : intitulé gras, description, dates à droite
+\newcommand{\cvline}[3]{\vspace{\gEntry}\textbf{#1} — #2\hfill #3\par}
+
+% Ligne « Environnement Technique » en italique 9 pt
+\newcommand{\envtech}[1]{%
+  {\small\textit{\textbf{Environnement Technique :} #1}\par}%
+}
+
+% Ligne « Matières principales » / détail de formation
+\newcommand{\coursework}[1]{{\small\textit{#1}\par}}
+
+% Séparateur médian utilisé par la référence
+\newcommand{\sep}{\ensuremath{\cdot}}
+
+\begin{document}
+
+%==============================================================================
+%  EN-TÊTE
+%==============================================================================
+\begin{center}
+  {\huge\bfseries Nathan Palvadeau}\\[\gNameRole]
+  {\Large\bfseries Analyste en Sécurité de l'Information }\\[\gRoleContact]
+  Versailles (78), France — nathan.palvadeau.pro@proton.me — +33 7 82 81 73 64 —
+  \href{https://linkedin.com/in/nathan-plvd}{linkedin.com/in/nathan-plvd}
+\end{center}
+
+%==============================================================================
+\cvsection{PROFIL}
+%==============================================================================
+Analyste SOC N2/N3 en alternance chez Cyna, sur un environnement international multi-clients de plus de 170 000 endpoints.
+À la recherche d'une alternance de \textbf{24 mois}, au rythme de \textbf{4 semaines en entreprise / 2 semaines à l'école}.
+Parcours construit depuis l'administration systèmes et réseaux vers la cybersécurité opérationnelle. Expérience en réponse à incident, detection engineering, threat hunting et automatisation SOC, complétée par une pratique régulière de la sécurité offensive.
+
+%==============================================================================
+\cvsection{COMPÉTENCES TECHNIQUES}
+%==============================================================================
+\skillline{Détection \& SIEM/XDR}{Elastic/Kibana, Splunk, Microsoft Defender, SentinelOne}
+\skillline{SOAR \& automatisation}{TheHive \& Cortex, n8n, Zendesk, Kafka, Agent MCP}
+\skillline{Forensic \& DFIR}{Volatility, Autopsy, E-Discovery, Velociraptor, analyse de log, collecte d'artefacts}
+\skillline{Sécurité offensive}{Tests d'intrusion Web \& AD, évaluation de vulnérabilités}
+\skillline{Scripting \& Programmation}{Python, PowerShell, C}
+\skillline{Infrastructure \& Cloud}{Active Directory, réseaux, systèmes, sécurité cloud, DevSecOps}
+\skillline{Threat Intelligence \& GRC}{CTI, OSINT, gouvernance, risque et conformité}
+\skillline{Langues}{Français (natif), Anglais (B2 / Courant)}
+
+%==============================================================================
+\cvsection{EXPÉRIENCE PROFESSIONNELLE}
+%==============================================================================
+
+\cventry{Analyste en Sécurité de l’Information}{Août 2025 - Nov. 2025}{Cyna, Clichy
+ \sep{} équipe de 7 analystes \sep{} environnement international multi-clients / multi-tenant,
+  \textasciitilde{}170k endpoints}
+\begin{cvitems}
+  \item \textbf{Analyse, triage et investigation} d'incidents de sécurité
+        complexes : réponse à incident, attaques multi-étapes, compromissions,
+        comportements suspects et phishing.
+  \item \textbf{Ingénierie de détection} : création et optimisation de règles
+        basées sur \textbf{MITRE ATT\&CK}, avec amélioration de la couverture et
+        réduction du bruit des alertes.
+\item \textbf{Pilotage de projets} alignés sur les Key Results de l'équipe :
+      cadrage, coordination et suivi d'initiatives visant à optimiser les
+      remontées d'alertes et améliorer la satisfaction client, 
+      gestion de multiples projets visant la réduction de False Positive.
+\item \textbf{Automatisation et amélioration des processus SOC} :
+      contribution au développement d'un moteur de traitement automatisé des
+      alertes (workflows et IoC), développement de responders en Python,
+      conception de playbooks n8n, optimisation des règles de détection, co-création d'agent MCP.
+  \item \textbf{R\&D \& Threat Intelligence} : intégration de nouvelles sources
+        au SIEM, règles comportementales \textbf{ES|QL}, détection
+        multi-firewall, intégration de flux \textbf{CTI} et contextualisation
+        des alertes assistée par IA.
+  \item \textbf{Pilotage fonctionnel d'un Case Manager} interne avec l'équipe
+        Produit : cadrage des besoins, gestion et priorisation des tâches,
+        suivi des évolutions et des livraisons (en sprint) via Linear.
+  \item Support aux analystes N1/N2 dans la qualification et l'investigation
+        d'incidents, amélioration continue du SOC (documentation, REX,
+        \textbf{optimisation des processus opérationnels}),  formation technique et référent SOC des collaborateurs non technique.
+\end{cvitems}
+\envtech{SentinelOne, Microsoft Defender, Elastic, Zendesk, n8n, GitLab, Linear, TheHive \& Cortex, Python, Claude.}
+
+\cventry{Analyste Cyber Forensic}{Août 2024 - Sept. 2024}{ADP, Nanterre \sep{} équipe de 4 analystes \sep{} entreprise internationale, +10k utilisateurs}
+\begin{cvitems}
+  \item \textbf{Forensic et réponse à incident} : analyses approfondies de
+        malwares et investigation d'artefacts afin de reconstituer des scénarios
+        d'attaque complexes.
+  \item \textbf{Opérations DFIR} et workflows d'investigation : outils
+        spécialisés pour la collecte, la préservation et l'analyse d'artefacts,
+        avec automatisation des étapes récurrentes.
+  \item Conception d'un \textbf{laboratoire d'investigation OSINT} dédié
+        (détails omis pour des raisons de confidentialité) et rédaction de la
+        documentation associée.
+  \item \textbf{Projet international} : déploiement de
+        l'environnement dans le cadre d'une investigation réelle et présentation
+        des conclusions à une équipe technique basée aux États-Unis.
+\end{cvitems}
+\envtech{CrowdStrike, Microsoft Defender, E-Discovery, Volatility, Vélociraptor, Autopsy, Python, PowerShell, OpenAI.}
+
+%==============================================================================
+\cvsection{FORMATION}
+%==============================================================================
+
+\cventry{Mastère Cybersécurité}{Sept. 2025 - Sept. 2028}{Ecole2600, Saint-Quentin-En-Yvelines}
+\coursework{Matières principales : sécurité applicative \& offensive (sécurité Web, tests d'intrusion, évaluation de vulnérabilités), sécurité infrastructure \&
+cloud (réseaux, systèmes, DevSecOps), SOC \& DFIR, Threat Intelligence \& recherche
+appliquée, reverse engineering, exploitation bas niveau (pwn) \& analyse malware,  gouvernance, risque et conformité, programmation C / Python / Rust.}
+
+\cventry{Bachelor en Informatique}{Sept. 2023 - Sept. 2025}{Sup de Vinci, Paris \sep{} deux années de formation préparatoire validées}
+\coursework{Matières principales : administration systèmes Windows et Linux,
+réseaux et protocoles, virtualisation, scripting, Active Directory, supervision
+et exploitation d'infrastructure. Gagnant Hackathon 2023 : In-Store Ads — Solution de gestion de diffusion publicitaire en magasin, Kubii}
+
+%==============================================================================
+\cvsection{PROJETS ET PRATIQUE}
+%==============================================================================
+
+\cvline{Plateformes CTF}{HackTheBox (SOC Analyst Path - Hacker), Root-Me (+2500pts), \\TryHackMe (Top 1\% : AI Security, SOC L1 / L2, DFIR) — \textbf{Autodidacte}}{Depuis 2023}
+\cvline{SOC \& Home Lab Infrastructure}{conception et exploitation d'un laboratoire de détection et de réponse}{Depuis 2023}
+\cvline{Blockchain}{R\&D Financial Intelligence (FinInt), tracking de transactions décentralisées, Blockchain}{Depuis 2025}
+
+\end{document}
