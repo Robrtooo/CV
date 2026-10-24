@@ -1,0 +1,59 @@
+ADP (Nanterre, FR) | 4 analystes | Août 2024
+Tech Stack →CrowdStrike, Microsoft Defender, E-Discovery, Volatility, Autopsy, Python, PowerShell, OpenAI
+Cyber Forensic • Entreprise internationale • +10k utilisateurs
+Forensic et réponse à incident : analyses approfondies de malwares et investigation d’artefacts afin
+de reconstituer des scénarios d’attaque complexes.
+Opérations DFIR et workflows d’investigation : utilisation d’outils spécialisés pour la collecte, la
+préservation et l’analyse d’artefacts, avec automatisation des étapes récurrentes.
+Environnement de recherche dédié : conception d’un laboratoire d’investigation OSINT (détails omis
+pour des raisons de confidentialité) et rédaction de la documentation associée.
+Pilotage d’un projet à l’international : déploiement de l’environnement dans le cadre d’une
+investigation réelle et présentation des conclusions stratégiques à une équipe technique basée aux
+États-Unis.
+Nathan PALVADEAU Security Monitoring Analyst
+Analyste SOC N2 • Scope Européen (anglophone) • +120k endpoints
+Cyna (Paris, FR) | 7 analystes | Depuis août 2025
+Tech Stack →Elastic, Microsoft Defender, SentinelOne, TheHive & Cortex, n8n, Zendesk, Python
+EXPÉRIENCES
+PROFESSIONNELLES
+Analyse et qualification des incidents de sécurité : phishing O365, compromission de postes,
+mouvements latéraux, Active Directory, attaques par force brute, infections malware et
+enrichissement contextuel pour appuyer les investigations.
+Réalisation d’investigations approfondies, mise en œuvre des actions de confinement et
+coordination technique avec les clients et les éditeurs de solutions de sécurité.
+Amélioration des capacités de détection : création de règles de détection avancées, automatisation
+de playbooks et activités de threat hunting.
+Contribution au développement des capacités SOC : formation, documentation, standardisation de
+procédures et pilotage de projet interne.
+Collaboration avec l’équipe R&D : prototypage, tests et déploiement d’améliorations liées à
+l’automatisation SOC et à la détection (intégration IA, CTI, règles firewall, corrélation de logs).
+nathan.palvadeau.pro@proton.me • linkedin.com/in/nathan-plvd
++33 7 82 81 73 64 • Versailles (78) • Permis B
+Recherche alternance sur 2 ans
+4 semaines entreprise / 2 semaines école
+Sécurité applicative & offensive : sécurité Web, tests d’intrusion et évaluation de vulnérabilités.
+Reverse engineering, exploitation bas niveau (pwn) & analyse malware
+Sécurité infrastructure & cloud : réseaux, systèmes, sécurité cloud et pratiques DevSecOps.
+Threat Intelligence & recherche appliquée : Cyber Threat Intelligence (CTI), gestion de projet et
+recherches spécialisées.
+Gouvernance, risque et compliance
+Programmation : C, Python & Rust
+Mastère en cybersécurité (programme en alternance)
+Ecole2600
+FORMATION
+Blockchain & Automatisations
+PROJETS
+Altered Security - En cours (2026)
+Certified Red Team Professional (CRTP)
+SOC & Home Lab Infrastructure
+Autodidacte | Depuis 2023
+CTF Platforms
+Autodidacte | Depuis 2023
+HackTheBox, Root-Me, TryHackMe
+Projet de R&D sur des thématiques de FinInt,
+tracking de transactions décentralisées
+Français Anglais
+Capacité professionnelle complète (B2)
+Natif
+LANGUES
+
